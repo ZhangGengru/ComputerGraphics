@@ -186,8 +186,10 @@
     <ClInclude Include="CGWORK0629.h" />
     <ClInclude Include="CGWORK0629Doc.h" />
     <ClInclude Include="CGWORK0629View.h" />
+    <ClInclude Include="DrawCircle.h" />
     <ClInclude Include="DrawLine.h" />
     <ClInclude Include="DrawMode.h" />
+    <ClInclude Include="DrawSquare.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
@@ -199,8 +201,10 @@
     <ClCompile Include="CGWORK0629.cpp" />
     <ClCompile Include="CGWORK0629Doc.cpp" />
     <ClCompile Include="CGWORK0629View.cpp" />
+    <ClCompile Include="DrawCircle.cpp" />
     <ClCompile Include="DrawLine.cpp" />
     <ClCompile Include="DrawMode.cpp" />
+    <ClCompile Include="DrawSquare.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

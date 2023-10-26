@@ -20,13 +20,22 @@
 #define ID_EDIT_CLEA                    32778
 #define ID_DRAW2D_DRAWSQUQRE            32779
 #define ID_SETCOLOR                     32780
+#define ID_32781                        32781
+#define ID_CLEAR                        32782
+#define ID_32783                        32783
+#define ID_32784                        32784
+#define ID_32785                        32785
+#define ID_32786                        32786
+#define ID_DRAW2D_DRAWPOLY              32787
+#define ID_SET                          32788
+#define ID_SETFILLCOLOR                 32789
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        312
-#define _APS_NEXT_COMMAND_VALUE         32781
+#define _APS_NEXT_COMMAND_VALUE         32790
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

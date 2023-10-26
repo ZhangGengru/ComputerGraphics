@@ -14,6 +14,9 @@
 #include "CGWORK0629View.h"
 #include"SetColor.h"
 #include"DrawLine.h"
+#include"DrawSquare.h"
+#include"DrawCircle.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,8 +36,11 @@ BEGIN_MESSAGE_MAP(CCGWORK0629View, CView)
 	ON_WM_MOUSEMOVE()
 	ON_COMMAND(ID_SETCOLOR, &CCGWORK0629View::OnSetcolor)
 	ON_COMMAND(ID_DRAW2D_DRAWLINE, &CCGWORK0629View::OnDraw2d_DRAWLine)
-	//ON_COMMAND(ID_SETCOLOR, &CCGWORK0629View::OnSetcolor)
-
+	ON_COMMAND(ID_DRAW2D_DRAWSQUARE, &CCGWORK0629View::OnDraw2dDrawsquqre)
+	ON_COMMAND(ID_DRAW2D_DRAWCIRCLE,&CCGWORK0629View::OnDraw2dDrawCircle)
+	ON_COMMAND(ID_DRAW2D_DRAWSQUQRE, &CCGWORK0629View::OnDraw2dDrawsquqre)
+	ON_COMMAND(ID_DRAW2D_DRAWCIRCLE, &CCGWORK0629View::OnDraw2dDrawCircle)
+	ON_COMMAND(ID_CLEAR, &CCGWORK0629View::OnClear)
 END_MESSAGE_MAP()
 
 // CCGWORK0629View 构造/析构
@@ -66,6 +72,15 @@ BOOL CCGWORK0629View::PreCreateWindow(CREATESTRUCT& cs)
 	return CView::PreCreateWindow(cs);
 }
 
+//清屏函数
+void CCGWORK0629View::clear()
+{
+	CDC* pDC = this->GetDC();
+	CRect rect;
+	GetClientRect(&rect);
+	CBrush brush(RGB(255, 255, 255));
+	pDC->FillRect(&rect, &brush);
+}
 // CCGWORK0629View 绘图
 
 void CCGWORK0629View::OnDraw(CDC* /*pDC*/)
@@ -121,6 +136,10 @@ CCGWORK0629Doc* CCGWORK0629View::GetDocument() const // 非调试版本是内联
 
 // CCGWORK0629View 消息处理程序
 
+COLORREF CCGWORK0629View::currColor()
+{
+	return RGB(r, g, b);
+}
 
 void CCGWORK0629View::OnLButtonDown(UINT nFlags, CPoint point)
 {
@@ -129,10 +148,6 @@ void CCGWORK0629View::OnLButtonDown(UINT nFlags, CPoint point)
 	CView::OnLButtonDown(nFlags, point);
 }
 
-COLORREF CCGWORK0629View::currColor()
-{
-	return RGB(r, g, b);
-}
 
 
 void CCGWORK0629View::OnMouseMove(UINT nFlags, CPoint point)
@@ -148,11 +163,6 @@ void CCGWORK0629View::OnMouseMove(UINT nFlags, CPoint point)
 	CView::OnMouseMove(nFlags, point);
 }
 
-void CCGWORK0629View::OnDraw2d_DRAWLine()
-{
-	delete this->drawmode;
-	this->drawmode = new DrawLine();
-}
 
 
 void CCGWORK0629View::OnSetcolor()
@@ -173,4 +183,36 @@ void CCGWORK0629View::OnSetcolor()
 			//更新颜色
 		}
 		return;
+}
+//画线
+void CCGWORK0629View::OnDraw2d_DRAWLine()
+{
+	delete this->drawmode;
+	this->drawmode = new DrawLine();
+	clear();
+}
+
+//画矩形
+void CCGWORK0629View::OnDraw2dDrawsquqre()
+{
+	// TODO: 在此添加命令处理程序代码
+	delete this->drawmode;
+	this->drawmode = new DrawSquare();
+	clear();
+}
+
+
+void CCGWORK0629View::OnDraw2dDrawCircle()
+{
+	// TODO: 在此添加命令处理程序代码
+	delete this->drawmode;
+	this->drawmode = new DrawCircle();
+	clear();
+}
+
+
+void CCGWORK0629View::OnClear()
+{
+	// TODO: 在此添加命令处理程序代码
+	clear();
 }

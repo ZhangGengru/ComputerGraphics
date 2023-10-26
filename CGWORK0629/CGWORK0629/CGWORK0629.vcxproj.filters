@@ -48,6 +48,12 @@
     <ClInclude Include="DrawLine.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DrawSquare.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawCircle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CGWORK0629.cpp">
@@ -72,6 +78,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DrawLine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawSquare.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawCircle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

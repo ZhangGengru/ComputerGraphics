@@ -17,7 +17,7 @@ public:
 	int r, g, b;
 // 操作
 public:
-
+	void clear();
 // 重写
 public:
 	virtual void OnDraw(CDC* pDC);  // 重写以绘制该视图
@@ -56,6 +56,9 @@ public:
 
 
 	
+	afx_msg void OnDraw2dDrawsquqre();
+	afx_msg void OnDraw2dDrawCircle();
+	afx_msg void OnClear();
 };
 
 #ifndef _DEBUG  // CGWORK0629View.cpp 中的调试版本
