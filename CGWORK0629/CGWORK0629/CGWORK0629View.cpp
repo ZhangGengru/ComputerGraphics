@@ -12,6 +12,8 @@
 
 #include "CGWORK0629Doc.h"
 #include "CGWORK0629View.h"
+#include"SetColor.h"
+#include"DrawLine.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,6 +29,12 @@ BEGIN_MESSAGE_MAP(CCGWORK0629View, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEMOVE()
+	ON_COMMAND(ID_SETCOLOR, &CCGWORK0629View::OnSetcolor)
+	ON_COMMAND(ID_DRAW2D_DRAWLINE, &CCGWORK0629View::OnDraw2d_DRAWLine)
+	//ON_COMMAND(ID_SETCOLOR, &CCGWORK0629View::OnSetcolor)
+
 END_MESSAGE_MAP()
 
 // CCGWORK0629View 构造/析构
@@ -34,11 +42,20 @@ END_MESSAGE_MAP()
 CCGWORK0629View::CCGWORK0629View() noexcept
 {
 	// TODO: 在此处添加构造代码
-
+	r = 0;
+	g = 0;
+	b = 0;
+    drawmode = new DrawLine();
+	lastx = 0;
+	lasty = 0;
+	haslate = false;
+	dragx = 0;
+	dragy = 0;
 }
 
 CCGWORK0629View::~CCGWORK0629View()
 {
+	delete drawmode;
 }
 
 BOOL CCGWORK0629View::PreCreateWindow(CREATESTRUCT& cs)
@@ -103,3 +120,57 @@ CCGWORK0629Doc* CCGWORK0629View::GetDocument() const // 非调试版本是内联
 
 
 // CCGWORK0629View 消息处理程序
+
+
+void CCGWORK0629View::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	drawmode->update(this->GetDC(), point.x, point.y, currColor());
+	CView::OnLButtonDown(nFlags, point);
+}
+
+COLORREF CCGWORK0629View::currColor()
+{
+	return RGB(r, g, b);
+}
+
+
+void CCGWORK0629View::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (!drawmode->isOver())
+	{
+		CDC* pDC = this->GetDC();
+		drawmode->drag(pDC, dragx, dragy, point.x, point.y, currColor());
+	}
+	dragx = point.x;
+	dragy = point.y;
+	CView::OnMouseMove(nFlags, point);
+}
+
+void CCGWORK0629View::OnDraw2d_DRAWLine()
+{
+	delete this->drawmode;
+	this->drawmode = new DrawLine();
+}
+
+
+void CCGWORK0629View::OnSetcolor()
+{
+	// TODO: 在此添加命令处理程序代码
+	SetColor dia;	//构造对话框对象
+		//将当前颜色传递给对话框
+		dia.m_b = b;
+		dia.m_g = g;
+		dia.m_r = r;
+		//显示对话框
+		if (dia.DoModal() == IDOK)
+		{
+			//如果用户单击了确定按钮
+			b = dia.m_b;
+			g = dia.m_g;
+			r = dia.m_r;
+			//更新颜色
+		}
+		return;
+}

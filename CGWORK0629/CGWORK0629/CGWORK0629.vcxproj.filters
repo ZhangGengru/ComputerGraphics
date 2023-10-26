@@ -39,6 +39,15 @@
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DrawMode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SetColor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawLine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CGWORK0629.cpp">
@@ -54,6 +63,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawMode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SetColor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawLine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

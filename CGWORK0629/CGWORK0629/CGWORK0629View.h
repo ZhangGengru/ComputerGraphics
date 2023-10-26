@@ -1,4 +1,4 @@
-﻿
+﻿#include"DrawMode.h"
 // CGWORK0629View.h: CCGWORK0629View 类的接口
 //
 
@@ -14,7 +14,7 @@ protected: // 仅从序列化创建
 // 特性
 public:
 	CCGWORK0629Doc* GetDocument() const;
-
+	int r, g, b;
 // 操作
 public:
 
@@ -40,6 +40,22 @@ protected:
 // 生成的消息映射函数
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnSetcolor();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnDraw2d_DRAWLine();
+	//void setLastPoint(int x, int y);
+	COLORREF currColor();
+	DrawMode* drawmode;
+	int lastx;
+	int lasty;
+	bool haslate;
+	int dragx;
+	int dragy;
+
+
+	
 };
 
 #ifndef _DEBUG  // CGWORK0629View.cpp 中的调试版本
