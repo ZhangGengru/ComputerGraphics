@@ -1,5 +1,7 @@
 ﻿cl : 命令行  warning D9035: “Gm”选项已否决，并将在将来的版本中移除
 cl : 命令行  warning D9007: “/Gm”需要“/Zi 或 /ZI”；选项被忽略
   Draw2dDrawpoly.cpp
-C:\Users\12404\Documents\GitHub\ComputerGraphics\CGWORK0629\CGWORK0629\Draw2dDrawpoly.cpp(86,17): warning C4101: “Ixs”: 未引用的局部变量
+C:\Users\12404\Documents\GitHub\ComputerGraphics\CGWORK0629\CGWORK0629\Draw2dDrawpoly.cpp(127,39): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+C:\Users\12404\Documents\GitHub\ComputerGraphics\CGWORK0629\CGWORK0629\Draw2dDrawpoly.cpp(134,16): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+C:\Users\12404\Documents\GitHub\ComputerGraphics\CGWORK0629\CGWORK0629\Draw2dDrawpoly.cpp(134,39): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
   CGWORK0629.vcxproj -> C:\Users\12404\Documents\GitHub\ComputerGraphics\CGWORK0629\x64\Debug\CGWORK0629.exe

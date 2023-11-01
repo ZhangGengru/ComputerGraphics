@@ -63,8 +63,6 @@ CCGWORK0629View::CCGWORK0629View() noexcept
 	lastx = 0;
 	lasty = 0;
 	haslate = false;
-	drag.x = 0;
-	drag.y = 0;
 }
 
 CCGWORK0629View::~CCGWORK0629View()
@@ -158,10 +156,7 @@ void CCGWORK0629View::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	//drawmode->update(this->GetDC(), point.x, point.y, currColor());
-	Point temp;
-	temp.x = point.x;
-	temp.y = point.y;
-	drawmode->updata(this->GetDC(), temp, currColor());
+	drawmode->updata(this->GetDC(), Point(point.x, point.y), currColor());
 	CView::OnLButtonDown(nFlags, point);
 }
 
@@ -170,13 +165,10 @@ void CCGWORK0629View::OnLButtonDown(UINT nFlags, CPoint point)
 void CCGWORK0629View::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	Point temp;
-	temp.x = point.x;
-	temp.y = point.y;
 	if (!drawmode->isOver())
 	{
 		CDC* pDC = this->GetDC();
-		drawmode->drag(pDC, drag,temp,currColor());
+		drawmode->drag(pDC, drag, Point(point.x, point.y),currColor());
 	}
 	drag.x = point.x;
 	drag.y = point.y;

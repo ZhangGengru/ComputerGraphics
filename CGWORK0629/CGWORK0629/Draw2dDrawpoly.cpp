@@ -1,7 +1,23 @@
 #include "pch.h"
 #include "Draw2dDrawpoly.h"
 #include "DrawLine.h"
+#include <utility>
 #include <unordered_map>
+
+struct hash_name
+{
+	size_t operator()(const Point& p)const
+	{
+		return hash<int>()(p.x) ^ hash<int>()(p.y);
+	}
+};
+struct equal_point
+{
+	bool operator()(const Point& p1, const Point& p2) const
+	{
+		return p1.x == p2.x && p1.y == p2.y;
+	}
+};
 void Draw2dDrawpoly::drag(CDC* pDC, Point oldPoint, Point newPoint, COLORREF color)
 {
 	pDC->SetROP2(R2_NOTXORPEN);//背景反色
@@ -41,8 +57,8 @@ void Draw2dDrawpoly::finish(CDC* pDC, COLORREF fillcolor)
 {
 	DrawLine drawline;
 	drawline.draw(pDC, points.back(), points.front(), edgecolor);
-	fill_inner(pDC, fillcolor);
-
+	//fill_inner(pDC, fillcolor);
+	EdgeMarkFill(pDC, fillcolor);
 	maxPoint.x = INT_MIN;
 	maxPoint.y = INT_MIN;
 	minPoint.x = INT_MAX;
@@ -72,42 +88,74 @@ void Draw2dDrawpoly::EdgeMarkFill(CDC* pDC, COLORREF fillcolor)
 {
 	vector<Point> RemainderPoint;//待测点组
 	//缩小待测点组范围
-	for (int i = minPoint.x; i < maxPoint.x; i++)
-		for (int j = minPoint.y; j < maxPoint.y; j++)
+	for (int i = minPoint.x; i <= maxPoint.x; i++)
+		for (int j = minPoint.y; j <= maxPoint.y; j++)
 		{
-			Point temp;
-			temp.x = i;
-			temp.y = j;
-			//pDC->SetPixel(temp.x, temp.y, fillcolor);
-			RemainderPoint.push_back(temp);
+			//pDC->SetPixel(i, j, fillcolor);
+			RemainderPoint.push_back(Point(i,j));
 		}
-	//unordered_map<Point, bool>MASK(false);
+	unordered_map<Point, bool, hash_name, equal_point>MASK;
+	//vector<pair<Point, bool>>MASK;
+	for (int i = 0; i < RemainderPoint.size(); i++)
+		MASK.insert(make_pair(RemainderPoint[i],false));
+	/*for (auto iter = MASK.begin(); iter != MASK.end(); iter++)
+			pDC->SetPixel(iter->first.x, iter->first.y, fillcolor);*/
 	Point p0, p1;//边两点
-	int x, dx, dy, Ixs;
+	double x, y, dx, dy, Ixs, Ixy;
+	int big_y; //上顶点会多一条线
 	for (int i = 0; i < points.size(); i++)
 	{
 		if (i != points.size() - 1)
 		{
 			p0 = points[i];
 			p1 = points[i + 1];
+			big_y = (int)(max(points[i].y, points[i + 1].y));
 		}
 		else
 		{
 			p0 = points[i];
 			p1 = points[0];
+			big_y = (int)(max(points[i].y, points[0].y));
 		}
 		if (p0.y != p1.y)//非水平边
 		{
 			x = p0.x;
-			dx = (p1.x - p0.x) / (p1.y - p0.y);
-			dy = abs(p1.y - p0.y) / (p1.y - p0.y);
+			y = p0.y;
+
+			dx = (p1.x - p0.x) / fabs(p1.y - p0.y);
+			dy = (p1.y - p0.y) / fabs(p1.y - p0.y);
 			for (int y = p0.y; y != p1.y; y += dy)
 			{
-				//Ixs = (int)(x)
-				
+				x += dx;
+				Ixs = (int)(x + 0.5);
+				Ixy = (int)(y + 0.5);
+				//边标志算法
+				//for(int m = Ixs;m<=maxPoint.x;m++)
+				MASK[Point(Ixs, y)] = !MASK[Point(Ixs, y)];
 			}
 		}
 	}
+	//边标志算法
+	/*for (auto iter = MASK.begin(); iter != MASK.end(); iter++)
+		if (iter->second)
+			pDC->SetPixel(iter->first.x, iter->first.y, fillcolor);*/
+	//栅栏改进
+	for (int y = minPoint.y; y <maxPoint.y; y++)
+	{
+		bool inside = false;
+		for (int x = minPoint.x; x < maxPoint.x; x++)
+		{
+			if (MASK[Point(x, y)])
+				inside = !inside;
+			if (inside&&zgr[y%10][x%20])
+			{
+				if (y == minPoint.y)//如果是最上面的一行，不绘制
+					continue;
+				pDC->SetPixel(x, y, fillcolor);
+			}
+		}
+	}
+
 }
 
 int Draw2dDrawpoly::inner(Point p)
