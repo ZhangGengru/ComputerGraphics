@@ -1,7 +1,7 @@
 ﻿
 // CGWORK0629View.cpp: CCGWORK0629View 类的实现
 //
-
+#include<typeinfo>
 #include "pch.h"
 #include "framework.h"
 // SHARED_HANDLERS 可以在实现预览、缩略图和搜索筛选器句柄的
@@ -13,15 +13,17 @@
 #include "CGWORK0629Doc.h"
 #include "CGWORK0629View.h"
 #include"SetColor.h"
+#include"SetFillColor.h"
+#include"DrawMode.h"
 #include"DrawLine.h"
 #include"DrawSquare.h"
 #include"DrawCircle.h"
-
+#include"Draw2dDrawpoly.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
+#include <typeindex>
 
 // CCGWORK0629View
 
@@ -41,6 +43,9 @@ BEGIN_MESSAGE_MAP(CCGWORK0629View, CView)
 	ON_COMMAND(ID_DRAW2D_DRAWSQUQRE, &CCGWORK0629View::OnDraw2dDrawsquqre)
 	ON_COMMAND(ID_DRAW2D_DRAWCIRCLE, &CCGWORK0629View::OnDraw2dDrawCircle)
 	ON_COMMAND(ID_CLEAR, &CCGWORK0629View::OnClear)
+	ON_COMMAND(ID_DRAW2D_DRAWPOLY, &CCGWORK0629View::OnDraw2dDrawpoly)
+	ON_WM_RBUTTONDOWN()
+	ON_COMMAND(ID_SETFILLCOLOR, &CCGWORK0629View::OnSetfillcolor)
 END_MESSAGE_MAP()
 
 // CCGWORK0629View 构造/析构
@@ -51,12 +56,15 @@ CCGWORK0629View::CCGWORK0629View() noexcept
 	r = 0;
 	g = 0;
 	b = 0;
+	fill_b = 0;
+	fill_g = 0;
+	fill_r = 0;
     drawmode = new DrawLine();
 	lastx = 0;
 	lasty = 0;
 	haslate = false;
-	dragx = 0;
-	dragy = 0;
+	drag.x = 0;
+	drag.y = 0;
 }
 
 CCGWORK0629View::~CCGWORK0629View()
@@ -141,10 +149,19 @@ COLORREF CCGWORK0629View::currColor()
 	return RGB(r, g, b);
 }
 
+COLORREF CCGWORK0629View::currFillColor()
+{
+	return RGB(fill_r, fill_g, fill_b);
+}
+
 void CCGWORK0629View::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	drawmode->update(this->GetDC(), point.x, point.y, currColor());
+	//drawmode->update(this->GetDC(), point.x, point.y, currColor());
+	Point temp;
+	temp.x = point.x;
+	temp.y = point.y;
+	drawmode->updata(this->GetDC(), temp, currColor());
 	CView::OnLButtonDown(nFlags, point);
 }
 
@@ -153,13 +170,16 @@ void CCGWORK0629View::OnLButtonDown(UINT nFlags, CPoint point)
 void CCGWORK0629View::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	Point temp;
+	temp.x = point.x;
+	temp.y = point.y;
 	if (!drawmode->isOver())
 	{
 		CDC* pDC = this->GetDC();
-		drawmode->drag(pDC, dragx, dragy, point.x, point.y, currColor());
+		drawmode->drag(pDC, drag,temp,currColor());
 	}
-	dragx = point.x;
-	dragy = point.y;
+	drag.x = point.x;
+	drag.y = point.y;
 	CView::OnMouseMove(nFlags, point);
 }
 
@@ -183,6 +203,22 @@ void CCGWORK0629View::OnSetcolor()
 			//更新颜色
 		}
 		return;
+}
+void CCGWORK0629View::OnSetfillcolor()
+{
+	// TODO: 在此添加命令处理程序代码
+	SetFillColor dia;	//构造对话框对象
+	//将当前颜色传递给对话框
+	dia.m_b = fill_b;
+	dia.m_g = fill_g;
+	dia.m_r = fill_r;
+	if (dia.DoModal() == IDOK)
+	{
+		fill_b = dia.m_b;
+		fill_g = dia.m_g;
+		fill_r = dia.m_r;
+	}
+	return;
 }
 //画线
 void CCGWORK0629View::OnDraw2d_DRAWLine()
@@ -210,9 +246,35 @@ void CCGWORK0629View::OnDraw2dDrawCircle()
 	clear();
 }
 
+void CCGWORK0629View::OnDraw2dDrawpoly()
+{
+	// TODO: 在此添加命令处理程序代码
+	delete this->drawmode;
+	this->drawmode = new Draw2dDrawpoly();
+	clear();
+}
 
 void CCGWORK0629View::OnClear()
 {
 	// TODO: 在此添加命令处理程序代码
 	clear();
 }
+
+void CCGWORK0629View::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	Draw2dDrawpoly tmp;
+	Draw2dDrawpoly* p;
+	type_index tmp_type = type_index(typeid(tmp));
+	type_index dm_type = type_index(typeid(*this->drawmode));
+	CDC* pDC = this->GetDC();
+	if (tmp_type == dm_type)
+	{
+		p = (Draw2dDrawpoly*)this->drawmode;
+		p->finish(pDC, currFillColor());
+	}
+	CView::OnRButtonDown(nFlags, point);
+}
+
+
+

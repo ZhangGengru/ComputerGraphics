@@ -15,6 +15,7 @@ protected: // 仅从序列化创建
 public:
 	CCGWORK0629Doc* GetDocument() const;
 	int r, g, b;
+	int fill_r, fill_g, fill_b;
 // 操作
 public:
 	void clear();
@@ -47,18 +48,21 @@ public:
 	afx_msg void OnDraw2d_DRAWLine();
 	//void setLastPoint(int x, int y);
 	COLORREF currColor();
+	COLORREF currFillColor();
 	DrawMode* drawmode;
 	int lastx;
 	int lasty;
 	bool haslate;
-	int dragx;
-	int dragy;
+	Point drag;
 
 
 	
 	afx_msg void OnDraw2dDrawsquqre();
 	afx_msg void OnDraw2dDrawCircle();
 	afx_msg void OnClear();
+	afx_msg void OnDraw2dDrawpoly();
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnSetfillcolor();
 };
 
 #ifndef _DEBUG  // CGWORK0629View.cpp 中的调试版本

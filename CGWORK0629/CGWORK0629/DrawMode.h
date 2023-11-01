@@ -2,15 +2,21 @@
 #include<vector>
 
 using namespace std;
+
+struct Point
+{
+	int x;
+	int y;
+};
+
 class DrawMode
 {
 public:
-	virtual void drag(CDC* pDC, int oldx, int oldy, int newx, int newy, COLORREF color);//鼠标左键拖动时绘制图形
-	virtual void update(CDC* pDC, int x, int y, COLORREF color);//鼠标左键点击时更新点的坐标
-	virtual void draw(CDC* pDC,int startx,int starty,int endx,int endy,COLORREF color) = 0;//绘制图形
+	virtual void drag(CDC* pDC, Point oldPoint, Point newPoint, COLORREF color);
+	virtual void draw(CDC* pDC, Point startPoint, Point endPoint, COLORREF color)=0;
+	virtual void updata(CDC* pDC, Point point, COLORREF color);
 	virtual bool isOver();//判断是否结束
 	//记录鼠标左键点击时的坐标
-	vector<int>lastx;
-	vector<int>lasty;
+	vector<Point> points;
 };
 

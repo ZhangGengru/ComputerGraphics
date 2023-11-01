@@ -1,22 +1,21 @@
 #include "pch.h"
 #include "DrawCircle.h"
 
-
-void DrawCircle::draw(CDC* pDC, int startx, int starty, int endx, int endy, COLORREF color)
+void DrawCircle::draw(CDC* pDC, Point startPoint, Point endPoint, COLORREF color)
 {
 	//Bersenham»­Ô²
-	int dx = endx - startx;
-	int dy = endy - starty;
+	int dx = endPoint.x - startPoint.x;
+	int dy = endPoint.y - startPoint.y;
 	double R;
 	R = sqrt(dx * dx + dy * dy) / 2;
-	circleX = (startx + endx) / 2;
-	circleY = (starty + endy) / 2;
+	circleX = (startPoint.x + endPoint.x) / 2;
+	circleY = (startPoint.y + endPoint.y) / 2;
 	int x = 0, y = R;
 	int p = 3 - 2 * R;
 	for (; x <= y; x++)
 	{
-		pDC->SetPixel(circleX + x, circleY + y,color);
-		pDC->SetPixel(circleX + x, circleY - y,color);
+		pDC->SetPixel(circleX + x, circleY + y, color);
+		pDC->SetPixel(circleX + x, circleY - y, color);
 		pDC->SetPixel(circleX - x, circleY + y, color);
 		pDC->SetPixel(circleX - x, circleY - y, color);
 		//........................................................
@@ -33,5 +32,3 @@ void DrawCircle::draw(CDC* pDC, int startx, int starty, int endx, int endy, COLO
 			p += 4 * x + 6;
 	}
 }
-
-
