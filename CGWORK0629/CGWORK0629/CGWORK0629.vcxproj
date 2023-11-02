@@ -192,6 +192,7 @@
     <ClInclude Include="CGWORK0629.h" />
     <ClInclude Include="CGWORK0629Doc.h" />
     <ClInclude Include="CGWORK0629View.h" />
+    <ClInclude Include="Draw2dBezier.h" />
     <ClInclude Include="Draw2dDrawpoly.h" />
     <ClInclude Include="DrawCircle.h" />
     <ClInclude Include="DrawLine.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="CGWORK0629.cpp" />
     <ClCompile Include="CGWORK0629Doc.cpp" />
     <ClCompile Include="CGWORK0629View.cpp" />
+    <ClCompile Include="Draw2dBezier.cpp" />
     <ClCompile Include="Draw2dDrawpoly.cpp" />
     <ClCompile Include="DrawCircle.cpp" />
     <ClCompile Include="DrawLine.cpp" />

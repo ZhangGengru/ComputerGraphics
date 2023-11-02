@@ -6,7 +6,6 @@
 #define IDD_SETCOLOR2                   10
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
-#define IDD_SETCOLOR1                   101
 #define IDD_SETFILLCOLOR                101
 #define IDR_MAINFRAME                   128
 #define IDR_CGWORK0629TYPE              130
@@ -32,13 +31,18 @@
 #define ID_DRAW2D_DRAWPOLY              32787
 #define ID_SET                          32788
 #define ID_SETFILLCOLOR                 32789
+#define ID_32790                        32790
+#define ID_32791                        32791
+#define draw2D_Bezir                    32792
+#define Draw2dBezier                    32793
+#define ID_DRAW2D_BEZIER                32794
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        314
-#define _APS_NEXT_COMMAND_VALUE         32790
+#define _APS_NEXT_COMMAND_VALUE         32795
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

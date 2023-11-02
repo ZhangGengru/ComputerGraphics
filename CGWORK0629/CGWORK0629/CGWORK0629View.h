@@ -63,6 +63,8 @@ public:
 	afx_msg void OnDraw2dDrawpoly();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnSetfillcolor();
+	afx_msg void OnDraw2dBezier();
+	afx_msg void OnDraw2DBezier();
 };
 
 #ifndef _DEBUG  // CGWORK0629View.cpp 中的调试版本

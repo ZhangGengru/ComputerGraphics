@@ -157,6 +157,8 @@ protected:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnDraw2dBezier();
 };
 
 CAboutDlg::CAboutDlg() noexcept : CDialogEx(IDD_ABOUTBOX)
@@ -179,6 +181,9 @@ void CCGWORK0629App::OnAppAbout()
 }
 
 // CCGWORK0629App 消息处理程序
+
+
+
 
 
 

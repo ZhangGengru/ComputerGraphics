@@ -60,6 +60,9 @@
     <ClInclude Include="SetFillColor.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Draw2dBezier.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CGWORK0629.cpp">
@@ -96,6 +99,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SetFillColor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw2dBezier.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

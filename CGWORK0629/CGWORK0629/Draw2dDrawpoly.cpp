@@ -66,6 +66,34 @@ void Draw2dDrawpoly::finish(CDC* pDC, COLORREF fillcolor)
 	points.clear();
 }
 
+int Draw2dDrawpoly::inner(Point p)
+{
+	int m = -1, y = 0;
+	//points[points.size() - 1] = points[0];
+	points.push_back(points[0]);
+	for (int i = 0; i < points.size() - 1; i++)
+	{
+		if ((p.x < points[i].x && p.x < points[i + 1].x) ||
+			(p.x >= points[i].x && p.x >= points[i + 1].x) ||
+			(p.y < points[i].y && p.y < points[i + 1].y))
+			continue;
+		else
+		{
+			y = points[i].y + (p.x - points[i].x)
+				* (points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x);
+			if (y == p.y)
+				return 1;
+			if (y < p.y)
+				m = m * (-1);
+		}
+	}
+	if (m == -1)
+		return 0;
+	else
+		return 1;
+
+}
+
 void Draw2dDrawpoly::fill_inner(CDC* pDC, COLORREF fillcolor)
 {
 	vector<Point> RemainderPoint;//待测点组
@@ -128,7 +156,6 @@ void Draw2dDrawpoly::EdgeMarkFill(CDC* pDC, COLORREF fillcolor)
 			{
 				x += dx;
 				Ixs = (int)(x + 0.5);
-				Ixy = (int)(y + 0.5);
 				//边标志算法
 				//for(int m = Ixs;m<=maxPoint.x;m++)
 				MASK[Point(Ixs, y)] = !MASK[Point(Ixs, y)];
@@ -158,33 +185,5 @@ void Draw2dDrawpoly::EdgeMarkFill(CDC* pDC, COLORREF fillcolor)
 
 }
 
-int Draw2dDrawpoly::inner(Point p)
-{
-	int m = -1, y = 0;
-	//points[points.size() - 1] = points[0];
-	points.push_back(points[0]);
-	for (int i = 0; i < points.size()-1; i++)
-	{
-		if ((p.x < points[i].x && p.x < points[i + 1].x) ||
-			(p.x >= points[i].x && p.x >= points[i + 1].x) ||
-			(p.y < points[i].y && p.y < points[i + 1].y))
-			continue;
-		else
-		{
-			y = points[i].y + (p.x - points[i].x)
-				* (points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x);
-			if (y == p.y)
-					return 1;
-			if (y < p.y)
-				m = m * (-1);
-		}
-	}
-	if (m == -1)
-		return 0;
-	else
-		return 1;
-	
-		//pDC->SetPixel(p.x, p.y, fillcolor);	
-	
-}
+
 

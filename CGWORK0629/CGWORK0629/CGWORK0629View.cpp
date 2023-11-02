@@ -19,6 +19,7 @@
 #include"DrawSquare.h"
 #include"DrawCircle.h"
 #include"Draw2dDrawpoly.h"
+#include"Draw2dBezier.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -44,8 +45,11 @@ BEGIN_MESSAGE_MAP(CCGWORK0629View, CView)
 	ON_COMMAND(ID_DRAW2D_DRAWCIRCLE, &CCGWORK0629View::OnDraw2dDrawCircle)
 	ON_COMMAND(ID_CLEAR, &CCGWORK0629View::OnClear)
 	ON_COMMAND(ID_DRAW2D_DRAWPOLY, &CCGWORK0629View::OnDraw2dDrawpoly)
+	ON_COMMAND(ID_DRAW2D_BEZIER, &CCGWORK0629View::OnDraw2DBezier)
 	ON_WM_RBUTTONDOWN()
 	ON_COMMAND(ID_SETFILLCOLOR, &CCGWORK0629View::OnSetfillcolor)
+	
+	
 END_MESSAGE_MAP()
 
 // CCGWORK0629View 构造/析构
@@ -160,6 +164,21 @@ void CCGWORK0629View::OnLButtonDown(UINT nFlags, CPoint point)
 	CView::OnLButtonDown(nFlags, point);
 }
 
+void CCGWORK0629View::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	Draw2dDrawpoly tmp;
+	Draw2dDrawpoly* p;
+	type_index tmp_type = type_index(typeid(tmp));
+	type_index dm_type = type_index(typeid(*this->drawmode));
+	CDC* pDC = this->GetDC();
+	if (tmp_type == dm_type)
+	{
+		p = (Draw2dDrawpoly*)this->drawmode;
+		p->finish(pDC, currFillColor());
+	}
+	CView::OnRButtonDown(nFlags, point);
+}
 
 
 void CCGWORK0629View::OnMouseMove(UINT nFlags, CPoint point)
@@ -246,27 +265,27 @@ void CCGWORK0629View::OnDraw2dDrawpoly()
 	clear();
 }
 
+void CCGWORK0629View::OnDraw2DBezier()
+{
+	// TODO: 在此添加命令处理程序代码
+	delete this->drawmode;
+	this->drawmode = new DRAW2DBEIZER();
+	clear();
+}
+
 void CCGWORK0629View::OnClear()
 {
 	// TODO: 在此添加命令处理程序代码
 	clear();
 }
 
-void CCGWORK0629View::OnRButtonDown(UINT nFlags, CPoint point)
-{
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	Draw2dDrawpoly tmp;
-	Draw2dDrawpoly* p;
-	type_index tmp_type = type_index(typeid(tmp));
-	type_index dm_type = type_index(typeid(*this->drawmode));
-	CDC* pDC = this->GetDC();
-	if (tmp_type == dm_type)
-	{
-		p = (Draw2dDrawpoly*)this->drawmode;
-		p->finish(pDC, currFillColor());
-	}
-	CView::OnRButtonDown(nFlags, point);
-}
+
+
+
+
+
+
+
 
 
 
