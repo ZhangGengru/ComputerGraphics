@@ -20,5 +20,6 @@ public:
 	virtual bool isOver();//判断是否结束
 	//记录鼠标左键点击时的坐标
 	vector<Point> points;
+	
 };
 

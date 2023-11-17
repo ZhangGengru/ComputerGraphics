@@ -22,9 +22,5 @@ bool DrawMode::isOver()//表示是否在绘画中，如果还接受输入点的话返回false
 	return points.size() % 2 == 0;
 }
 
-//Point DrawMode::makePoint(int x, int y)
-//{
-//	return Point();
-//}
 
 

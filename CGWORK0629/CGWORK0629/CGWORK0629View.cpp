@@ -20,7 +20,8 @@
 #include"DrawCircle.h"
 #include"Draw2dDrawpoly.h"
 #include"Draw2dBezier.h"
-
+#include"Draw3dCube.h"
+#include"SetPar.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -48,8 +49,15 @@ BEGIN_MESSAGE_MAP(CCGWORK0629View, CView)
 	ON_COMMAND(ID_DRAW2D_BEZIER, &CCGWORK0629View::OnDraw2DBezier)
 	ON_WM_RBUTTONDOWN()
 	ON_COMMAND(ID_SETFILLCOLOR, &CCGWORK0629View::OnSetfillcolor)
-	
-	
+	ON_COMMAND(ID_DRAW3D_CUBE, &CCGWORK0629View::OnDraw3dCube)
+	ON_COMMAND(ID_MOVE_X, &CCGWORK0629View::OnMoveX)
+	ON_COMMAND(ID_MOVE_Y, &CCGWORK0629View::OnMoveY)
+	ON_COMMAND(ID_MOVE_Z, &CCGWORK0629View::OnMoveZ)
+	ON_COMMAND(ID_ROTATE_X, &CCGWORK0629View::OnRotateX)
+	ON_COMMAND(ID_ROTATE_Y, &CCGWORK0629View::OnRotateY)
+	ON_COMMAND(ID_ROTATE_Z, &CCGWORK0629View::OnRotateZ)
+	ON_COMMAND(ID_SET_PAR, &CCGWORK0629View::OnSetPar)
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 // CCGWORK0629View 构造/析构
@@ -67,6 +75,9 @@ CCGWORK0629View::CCGWORK0629View() noexcept
 	lastx = 0;
 	lasty = 0;
 	haslate = false;
+	center = Draw3DCube::XYZ::X;
+	move_step = 10;
+	rotate_angle = 90;
 }
 
 CCGWORK0629View::~CCGWORK0629View()
@@ -234,6 +245,7 @@ void CCGWORK0629View::OnSetfillcolor()
 //画线
 void CCGWORK0629View::OnDraw2d_DRAWLine()
 {
+	DrawLine drawline;
 	delete this->drawmode;
 	this->drawmode = new DrawLine();
 	clear();
@@ -273,6 +285,25 @@ void CCGWORK0629View::OnDraw2DBezier()
 	clear();
 }
 
+void CCGWORK0629View::OnDraw3dCube()
+{
+	// TODO: 在此添加命令处理程序代码
+	delete this->drawmode;
+	this->drawmode = new Draw3DCube();
+	Draw3DCube* p = (Draw3DCube*)drawmode;
+
+	CDC* pDC = this->GetDC();
+	CRect rect;
+	GetClientRect(rect);
+	//将视口坐标原点改到窗口中心，y轴向上为正
+	pDC->SetMapMode(MM_ANISOTROPIC);
+	pDC->SetWindowExt(rect.Width(), rect.Height());
+	pDC->SetViewportExt(rect.Width(), -rect.Height());
+	pDC->SetViewportOrg(rect.Width() / 2, rect.Height() / 2);
+	p->draw(pDC);
+}
+
+
 void CCGWORK0629View::OnClear()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -281,11 +312,133 @@ void CCGWORK0629View::OnClear()
 
 
 
+void CCGWORK0629View::OnMoveX()
+{
+	// TODO: 在此添加命令处理程序代码
+	if (typeid(*drawmode) == typeid(Draw3DCube))
+	{
+		this->center = Draw3DCube::X;
+		Draw3DCube* p = (Draw3DCube*)drawmode;
+		p->setMode(Draw3DCube::MODE::MOVE);
+	}
+}
 
 
+void CCGWORK0629View::OnMoveY()
+{
+	// TODO: 在此添加命令处理程序代码
+	if (typeid(*drawmode) == typeid(Draw3DCube))
+	{
+		this->center = Draw3DCube::Y;
+		Draw3DCube* p = (Draw3DCube*)drawmode;
+		p->setMode(Draw3DCube::MODE::MOVE);
+	}
+}
 
 
+void CCGWORK0629View::OnMoveZ()
+{
+	// TODO: 在此添加命令处理程序代码
+	if (typeid(*drawmode) == typeid(Draw3DCube))
+	{
+		this->center = Draw3DCube::Z;
+		Draw3DCube* p = (Draw3DCube*)drawmode;
+		p->setMode(Draw3DCube::MODE::MOVE);
+	}
+}
 
 
+void CCGWORK0629View::OnRotateX()
+{
+	// TODO: 在此添加命令处理程序代码
+	if (typeid(*drawmode) == typeid(Draw3DCube))
+	{
+		this->center = Draw3DCube::X;
+		Draw3DCube* p = (Draw3DCube*)drawmode;
+		p->setMode(Draw3DCube::MODE::ROTATE);
+	}
+}
 
 
+void CCGWORK0629View::OnRotateY()
+{
+	// TODO: 在此添加命令处理程序代码
+	if (typeid(*drawmode) == typeid(Draw3DCube))
+	{
+		this->center = Draw3DCube::Y;
+		Draw3DCube* p = (Draw3DCube*)drawmode;
+		p->setMode(Draw3DCube::MODE::ROTATE);
+	}
+}
+
+
+void CCGWORK0629View::OnRotateZ()
+{
+	// TODO: 在此添加命令处理程序代码
+	if (typeid(*drawmode) == typeid(Draw3DCube))
+	{
+		this->center = Draw3DCube::Z;
+		Draw3DCube* p = (Draw3DCube*)drawmode;
+		p->setMode(Draw3DCube::MODE::ROTATE);
+	}
+}
+
+
+void CCGWORK0629View::OnSetPar()
+{
+	// TODO: 在此添加命令处理程序代码
+	SetPar dia;
+	dia.angle = this->rotate_angle;
+	dia.step = this->move_step;
+	if (dia.DoModal() == IDOK)
+	{
+		this->rotate_angle = dia.angle;
+		this->move_step = dia.step;
+	}
+}
+
+
+void CCGWORK0629View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	CDC* pDC = this->GetDC();
+	CRect rect;
+	GetClientRect(rect);
+	//将视口坐标原点改到窗口中心，y轴向上为正
+	pDC->SetMapMode(MM_ANISOTROPIC);
+	pDC->SetWindowExt(rect.Width(), rect.Height());
+	pDC->SetViewportExt(rect.Width(), -rect.Height());
+	pDC->SetViewportOrg(rect.Width() / 2, rect.Height() / 2);
+	if (typeid(*drawmode) == typeid(Draw3DCube))
+	{
+		Draw3DCube* p = (Draw3DCube*)drawmode;
+		if (p->MODE_NOW == Draw3DCube::MODE::MOVE)
+		{
+			if (nChar == 65)
+			{
+				clear();
+				p->move(pDC, this->center, this->move_step);
+			}
+			if (nChar == 68)
+			{
+				clear();
+				p->move(pDC, this->center, -this->move_step);
+			}
+		}
+		else
+		{
+			if (nChar == 65)
+			{
+				clear();
+				p->rotate(pDC, this->center, this->rotate_angle);
+			}
+			if (nChar == 68)
+			{
+				clear();
+				p->rotate(pDC, this->center, -this->rotate_angle);
+			}
+		}
+	}
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
+
+}

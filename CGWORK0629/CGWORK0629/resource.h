@@ -9,9 +9,13 @@
 #define IDD_SETFILLCOLOR                101
 #define IDR_MAINFRAME                   128
 #define IDR_CGWORK0629TYPE              130
+#define IDD_DIALOG1                     314
+#define IDD_DIALOG_SETPAR               314
 #define IDC_G                           1000
 #define IDC_B                           1001
+#define IDC_EDIT1                       1001
 #define IDC_R                           1002
+#define IDC_EDIT2                       1002
 #define ID_32771                        32771
 #define ID_DRAW_                        32772
 #define ID_DRAW2D_DRAWSQUARE            32773
@@ -36,14 +40,31 @@
 #define draw2D_Bezir                    32792
 #define Draw2dBezier                    32793
 #define ID_DRAW2D_BEZIER                32794
+#define ID_32795                        32795
+#define ID_32796                        32796
+#define ID_32797                        32797
+#define ID_32798                        32798
+#define ID_32799                        32799
+#define ID_32800                        32800
+#define ID_32801                        32801
+#define ID_DRAW3D_CUBE                  32802
+#define ID_MOVE_X                       32803
+#define ID_MOVE_T                       32804
+#define ID_MOVE_Y                       32805
+#define ID_MOVE_Z                       32806
+#define ID_ROTATE_X                     32807
+#define ID_ROTATE_Y                     32808
+#define ID_ROTATE_Z                     32809
+#define ID_32810                        32810
+#define ID_SET_PAR                      32811
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        314
-#define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_RESOURCE_VALUE        316
+#define _APS_NEXT_COMMAND_VALUE         32812
+#define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

@@ -63,6 +63,12 @@
     <ClInclude Include="Draw2dBezier.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Draw3DCube.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SetPar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CGWORK0629.cpp">
@@ -102,6 +108,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Draw2dBezier.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw3DCube.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SetPar.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

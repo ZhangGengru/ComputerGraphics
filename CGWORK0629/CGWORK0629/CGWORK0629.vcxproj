@@ -194,6 +194,7 @@
     <ClInclude Include="CGWORK0629View.h" />
     <ClInclude Include="Draw2dBezier.h" />
     <ClInclude Include="Draw2dDrawpoly.h" />
+    <ClInclude Include="Draw3DCube.h" />
     <ClInclude Include="DrawCircle.h" />
     <ClInclude Include="DrawLine.h" />
     <ClInclude Include="DrawMode.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SetColor.h" />
     <ClInclude Include="SetFillColor.h" />
+    <ClInclude Include="SetPar.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +214,7 @@
     <ClCompile Include="CGWORK0629View.cpp" />
     <ClCompile Include="Draw2dBezier.cpp" />
     <ClCompile Include="Draw2dDrawpoly.cpp" />
+    <ClCompile Include="Draw3DCube.cpp" />
     <ClCompile Include="DrawCircle.cpp" />
     <ClCompile Include="DrawLine.cpp" />
     <ClCompile Include="DrawMode.cpp" />
@@ -225,6 +228,7 @@
     </ClCompile>
     <ClCompile Include="SetColor.cpp" />
     <ClCompile Include="SetFillColor.cpp" />
+    <ClCompile Include="SetPar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CGWORK0629.rc" />

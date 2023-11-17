@@ -1,4 +1,5 @@
 ﻿#include"DrawMode.h"
+#include"Draw3DCube.h"
 // CGWORK0629View.h: CCGWORK0629View 类的接口
 //
 
@@ -54,17 +55,28 @@ public:
 	int lasty;
 	bool haslate;
 	Point drag;
+	Draw3DCube::XYZ center;
+	int move_step;
+	int rotate_angle;
+	CDC* sDC;
 
-
-	
 	afx_msg void OnDraw2dDrawsquqre();
 	afx_msg void OnDraw2dDrawCircle();
 	afx_msg void OnClear();
 	afx_msg void OnDraw2dDrawpoly();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnSetfillcolor();
-	afx_msg void OnDraw2dBezier();
+	//afx_msg void OnDraw2dBezier();
 	afx_msg void OnDraw2DBezier();
+	afx_msg void OnDraw3dCube();
+	afx_msg void OnMoveX();
+	afx_msg void OnMoveY();
+	afx_msg void OnMoveZ();
+	afx_msg void OnRotateX();
+	afx_msg void OnRotateY();
+	afx_msg void OnRotateZ();
+	afx_msg void OnSetPar();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 #ifndef _DEBUG  // CGWORK0629View.cpp 中的调试版本
