@@ -9,11 +9,6 @@ void Draw3DCube::draw(CDC* pDC)
 		seenPoints[i].set(watchPoint.getx() + d * (points[i].getx() - watchPoint.getx()) / (points[i].getz() + d),
 						  watchPoint.gety() + d * (points[i].gety() - watchPoint.gety()) / (points[i].getz() + d), 0);
 	}
-	for (int i = 0; i < 8; i++)
-	{
-		//seenPoints[i] = CubePoint(seenPoints[i].getx() + 400, seenPoints[i].gety() + 700,0);
-		//seenPoints[i] = CubePoint(seenPoints[i].getx()+600, seenPoints[i].gety()+200, 0);
-	}
 	edges.resize(12);
 	edges[0].set(seenPoints[0], seenPoints[1]);
 	edges[1].set(seenPoints[1], seenPoints[2]);
